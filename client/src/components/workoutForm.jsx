@@ -1,13 +1,24 @@
 import { useState } from "react";
+import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 
 export default function WorkoutForm() {
+  const { dispatch } = useWorkoutsContext();
   const [title, setTitle] = useState("");
   const [load, setLoad] = useState(0);
   const [reps, setReps] = useState(0);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // const newTitle = title
+    //   .toLowerCase()
+    //   .split(" ")
+    //   .map(function (word) {
+    //     return word.replace(word[0], word[0].toUpperCase());
+    //   })
+    //   .join(" ");
 
     const workout = { title, reps, load };
 
@@ -27,16 +38,18 @@ export default function WorkoutForm() {
 
     if (response.ok) {
       setError(null);
-      alert("new workout added");
       setTitle("");
       setLoad(0);
       setReps(0);
+      setMessage("New Workout Added");
+      dispatch({ type: "CREATE_WORKOUT", payload: json });
     }
   };
 
   return (
     <form className="max-w-sm mx-auto">
       {error && <h1 className="text-red-700 font-lg mb-5">{error}</h1>}
+      {message && <h1 className="text-green-700 font-lg mb-5">{message}</h1>}
       <div className="mb-5">
         <label
           htmlFor="title"
