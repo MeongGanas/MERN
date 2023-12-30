@@ -32,7 +32,7 @@ const createWorkout = async (req, res) => {
 
   try {
     const workout = await Workout.create({ title, reps, load });
-    res.status(200).json(workout);
+    res.status(200).json({ message: "Workout created successfuly" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -52,7 +52,7 @@ const deleteWorkout = async (req, res) => {
     return res.status(404).json({ error: "No such workout" });
   }
 
-  res.status(200).json(workout);
+  res.status(200).json({ message: "Workout deleted successfuly" });
 };
 
 // update workout
@@ -69,7 +69,7 @@ const updateWorkout = async (req, res) => {
     return res.status(404).json({ error: "No such workout" });
   }
 
-  res.status(200).json(workout);
+  res.status(200).json({ message: "Workout updated successfuly" });
 };
 
 module.exports = {
