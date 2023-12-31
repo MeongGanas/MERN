@@ -12,15 +12,15 @@ export default function WorkoutForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // const newTitle = title
-    //   .toLowerCase()
-    //   .split(" ")
-    //   .map(function (word) {
-    //     return word.replace(word[0], word[0].toUpperCase());
-    //   })
-    //   .join(" ");
+    const newTitle = title
+      .toLowerCase()
+      .split(" ")
+      .map(function (word) {
+        return word.replace(word[0], word[0].toUpperCase());
+      })
+      .join(" ");
 
-    const workout = { title, reps, load };
+    const workout = { title: newTitle, reps, load };
 
     const response = await fetch("/api/workouts", {
       method: "POST",
@@ -48,8 +48,7 @@ export default function WorkoutForm() {
 
   return (
     <form className="max-w-sm mx-auto">
-      {error && <h1 className="text-red-700 font-lg mb-5">{error}</h1>}
-      {message && <h1 className="text-green-700 font-lg mb-5">{message}</h1>}
+      <h1 className="text-2xl font-bold mb-5">Create a new workout</h1>
       <div className="mb-5">
         <label
           htmlFor="title"
@@ -113,6 +112,16 @@ export default function WorkoutForm() {
       >
         Create
       </button>
+      {error && (
+        <h1 className="text-red-700 font-lg mt-5 border rounded-sm border-red-700 p-5">
+          {error}
+        </h1>
+      )}
+      {message && (
+        <h1 className="text-green-700 font-lg mt-5 border rounded-sm border-green-700 p-5">
+          {message}
+        </h1>
+      )}
     </form>
   );
 }
